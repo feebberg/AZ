@@ -4,176 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:;">
-    
-    <title>Apex Zero</title>
-
+    <meta name="theme-color" content="#101114">
+    <title>Apex Zero — Play something good</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
-
 <body>
-
-    <!-- LOADING SCREEN -->
-    <div id="loadingScreen">
+    <div id="loadingScreen" aria-live="polite">
         <div class="loader"></div>
-        <p>Loading Apex Zero…</p>
+        <p>Loading your arcade…</p>
     </div>
 
-    <!-- HEADER -->
     <header id="topbar">
-        <h1 class="logo">Apex Zero</h1>
-        <div class="top-buttons">
-            <button id="settingsBtn" class="icon-btn">⚙</button>
+        <a class="brand" href="#top" aria-label="Apex Zero home">
+            <span class="brand-mark">A</span>
+            <span class="brand-name">APEX<span>ZERO</span></span>
+        </a>
+        <div class="top-actions">
+            <span class="online-pill"><i></i> YOUR ARCADE</span>
+            <button id="settingsBtn" class="icon-btn" type="button" aria-label="Open settings" title="Settings">☼</button>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <main id="content">
+        <section class="hero" aria-labelledby="heroTitle">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-line"></span> THE ARCADE, REIMAGINED</p>
+                <h1 id="heroTitle">Find your next<br><span>favorite game.</span></h1>
+                <p class="hero-description">A little break goes a long way. Pick up where you left off or discover something new.</p>
+                <a class="hero-cta" href="#gamesSection">Explore games <span aria-hidden="true">↘</span></a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div>
+                <div class="art-spark spark-one">✳</div><div class="art-spark spark-two">✦</div>
+                <div class="art-disc"><span>AZ</span></div>
+                <div class="art-caption">PRESS PLAY<br><b>REPEAT</b></div>
+            </div>
+            <div class="hero-index"><span>01</span> / YOUR PLAY SPACE</div>
+        </section>
 
-        <!-- RECENT -->
-        <section id="recentSection">
-            <h2>Recent</h2>
+        <section id="recentSection" class="library-section">
+            <div class="section-heading">
+                <div><p class="eyebrow">BACK IN THE GAME</p><h2>Pick up where you left off</h2></div>
+                <span class="section-note">YOUR RECENT PLAYS</span>
+            </div>
             <div id="recentGrid" class="grid"></div>
         </section>
 
-        <!-- ALL GAMES -->
-        <section id="gamesSection">
-            <h2>All Games</h2>
-
-            <!-- SEARCH BAR -->
-            <input id="searchInput" type="text" placeholder="Search games..." />
-
+        <section id="gamesSection" class="library-section games-section">
+            <div class="section-heading games-heading">
+                <div><p class="eyebrow">THE FULL COLLECTION</p><h2>Choose your next adventure</h2></div>
+                <label class="search-wrap"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search games…" autocomplete="off" aria-label="Search games"></label>
+            </div>
             <div id="gamesGrid" class="grid"></div>
         </section>
-
+        <footer class="site-footer"><span class="footer-brand">APEX ZERO</span><span>Built for the joy of play.</span></footer>
     </main>
 
-    <!-- SETTINGS SIDE PANEL -->
-    <div id="settingsPanel" class="side-panel">
-        <div class="side-header">
-            <h2>Settings</h2>
-            <button id="closeSettings" class="close-btn">✕</button>
+    <div id="settingsPanel" class="side-panel" aria-label="Settings" aria-hidden="true">
+        <div class="side-header"><div><p class="eyebrow">MAKE IT YOURS</p><h2>Settings</h2></div><button id="closeSettings" class="close-btn" type="button" aria-label="Close settings">✕</button></div>
+        <div class="settings-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="appearanceTab" type="button">Look</button>
+            <button class="tab-btn" data-tab="uiTab" type="button">Display</button>
+            <button class="tab-btn" data-tab="layoutTab" type="button">Layout</button>
+            <button class="tab-btn" data-tab="systemTab" type="button">System</button>
         </div>
-
-        <!-- TABS -->
-        <div class="settings-tabs">
-            <button class="tab-btn active" data-tab="appearanceTab">Appearance</button>
-            <button class="tab-btn" data-tab="uiTab">UI Scaling</button>
-            <button class="tab-btn" data-tab="layoutTab">Layout</button>
-            <button class="tab-btn" data-tab="systemTab">System</button>
-        </div>
-
-        <!-- TAB CONTENTS -->
         <div class="tab-content" id="appearanceTab">
-            <h3>Theme</h3>
-            <select id="themeSelect">
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-            </select>
-
-            <h3>Accent Color</h3>
-            <input type="color" id="accentPicker" value="#888888">
-
-            <div id="accentPresets"></div>
-
-            <h3>Background Style</h3>
-            <select id="backgroundSelect">
-                <option value="solid">Solid</option>
-                <option value="noise">Noise</option>
-                <option value="gradient">Gradient</option>
-                <option value="blur">Blurred Panels</option>
-            </select>
-
-            <h3>Corner Radius</h3>
-            <select id="radiusSelect">
-                <option value="0">Sharp</option>
-                <option value="8">Medium</option>
-                <option value="16">Rounded</option>
-            </select>
-
-            <h3>Contrast</h3>
-            <select id="contrastSelect">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
+            <h3>Theme</h3><select id="themeSelect"><option value="dark">Dark</option><option value="light">Light</option></select>
+            <h3>Accent color</h3><input type="color" id="accentPicker" value="#b8f36b"><div id="accentPresets"></div>
+            <h3>Background style</h3><select id="backgroundSelect"><option value="solid">Solid</option><option value="noise">Noise</option><option value="gradient">Gradient</option><option value="blur">Blurred panels</option></select>
+            <h3>Corner radius</h3><select id="radiusSelect"><option value="0">Sharp</option><option value="8">Medium</option><option value="16">Rounded</option></select>
+            <h3>Contrast</h3><select id="contrastSelect"><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option></select>
         </div>
-
-        <div class="tab-content" id="uiTab" style="display:none;">
-            <h3>Font Size</h3>
-            <input type="range" id="fontSizeSlider" min="12" max="22" value="16">
-
-            <h3>Card Size</h3>
-            <input type="range" id="cardSizeSlider" min="120" max="240" value="160">
-
-            <h3>Grid Density</h3>
-            <select id="densitySelect">
-                <option value="compact">Compact</option>
-                <option value="comfort">Comfort</option>
-                <option value="spacious">Spacious</option>
-            </select>
-        </div>
-
-        <div class="tab-content" id="layoutTab" style="display:none;">
-            <h3>Layout Mode</h3>
-            <select id="layoutModeSelect">
-                <option value="grid">Comfort Grid</option>
-                <option value="compact">Compact Grid</option>
-                <option value="list">List View</option>
-            </select>
-
-            <h3>Sorting</h3>
-            <select id="sortSelect">
-                <option value="az">A → Z</option>
-                <option value="recent">Recently Added</option>
-                <option value="played">Most Played</option>
-            </select>
-
-            <h3>Recent Section</h3>
-            <label><input type="checkbox" id="toggleRecent" checked> Show Recent</label>
-        </div>
-
-        <div class="tab-content" id="systemTab" style="display:none;">
-            <h3>Autoscan</h3>
-            <label><input type="checkbox" id="autoscanToggle"> Enable Autoscan</label>
-
-            <h3>Maintenance</h3>
-            <button id="clearRecentBtn" class="admin-action">Clear Recent</button>
-            <button id="clearCacheBtn" class="admin-action">Clear Cache</button>
-
-            <h3>FPS Monitor</h3>
-            <button id="fpsToggleBtn" class="admin-action">Toggle FPS</button>
-        </div>
+        <div class="tab-content" id="uiTab" style="display:none"><h3>Font size</h3><input type="range" id="fontSizeSlider" min="12" max="22" value="16"><h3>Card size</h3><input type="range" id="cardSizeSlider" min="120" max="240" value="160"><h3>Grid density</h3><select id="densitySelect"><option value="compact">Compact</option><option value="comfort">Comfort</option><option value="spacious">Spacious</option></select></div>
+        <div class="tab-content" id="layoutTab" style="display:none"><h3>Layout mode</h3><select id="layoutModeSelect"><option value="grid">Comfort grid</option><option value="compact">Compact grid</option><option value="list">List view</option></select><h3>Sorting</h3><select id="sortSelect"><option value="az">A → Z</option><option value="recent">Recently added</option><option value="played">Most played</option></select><h3>Recent section</h3><label class="check-label"><input type="checkbox" id="toggleRecent" checked> Show recent plays</label></div>
+        <div class="tab-content" id="systemTab" style="display:none"><h3>Autoscan</h3><label class="check-label"><input type="checkbox" id="autoscanToggle"> Enable autoscan</label><h3>Maintenance</h3><button id="clearRecentBtn" class="admin-action" type="button">Clear recent plays</button><button id="clearCacheBtn" class="admin-action" type="button">Clear cache</button><h3>Performance</h3><button id="fpsToggleBtn" class="admin-action" type="button">Toggle FPS monitor</button></div>
     </div>
-
-    <!-- LAUNCH PROMPT -->
-    <div id="launchPrompt" class="overlay">
-        <div class="launch-box">
-            <h2>Launch Game?</h2>
-            <img id="launchThumb" class="launch-thumb">
-            <p id="launchName"></p>
-
-            <div class="launch-buttons">
-                <button id="cancelLaunch" class="cancel-btn">Cancel</button>
-                <button id="confirmLaunch" class="launch-btn">Launch</button>
-            </div>
-        </div>
+    <div id="launchPrompt" class="overlay" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
+        <div class="launch-box"><p class="eyebrow">READY WHEN YOU ARE</p><h2 id="launchTitle">Launch game?</h2><img id="launchThumb" class="launch-thumb" alt=""><p id="launchName"></p><div class="launch-buttons"><button id="cancelLaunch" class="cancel-btn" type="button">Not now</button><button id="confirmLaunch" class="launch-btn" type="button">Let's play <span>↗</span></button></div></div>
     </div>
-
-    <!-- FPS COUNTER -->
     <div id="fpsCounter"></div>
-
-    <!-- LOAD MODULAR JS -->
     <script type="module" src="js/main.js"></script>
-
-    <!-- LOADING SCREEN FADE -->
-    <script>
-        window.addEventListener("load", () => {
-            const loader = document.getElementById("loadingScreen");
-            loader.style.opacity = "0";
-            setTimeout(() => loader.style.display = "none", 400);
-        });
-    </script>
-
+    <script>window.addEventListener("load",()=>{const loader=document.getElementById("loadingScreen");loader.style.opacity="0";setTimeout(()=>loader.style.display="none",400)});</script>
 </body>
 </html>
