@@ -1,334 +1,266 @@
-/* ============================================================
-   APEX ZERO — FULL MONOCHROME UI THEME (SIDE PANEL EDITION)
-============================================================ */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' blob: data:;">
+    <meta name="theme-color" content="#101114">
+    <title>Apex Zero — Play something good</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="loadingScreen" aria-live="polite">
+        <div class="loader"></div>
+        <p>Loading your arcade…</p>
+    </div>
 
-/* ------------------------------------------------------------
-   ROOT VARIABLES (DYNAMICALLY UPDATED BY JS)
------------------------------------------------------------- */
-:root {
-    --bg: #0f0f0f;
-    --panel: #1a1a1a;
-    --border: #2a2a2a;
-    --text: #f5f5f5;
-    --text-soft: #bbb;
-    --hover: #222;
-    --accent: #888;
+    <header id="topbar">
+        <a class="brand" href="#top" aria-label="Apex Zero home">
+            <span class="brand-mark">A</span>
+            <span class="brand-name">APEX<span>ZERO</span></span>
+        </a>
+        <div class="top-actions">
+            <span class="online-pill"><i></i> YOUR ARCADE</span>
+            <button id="settingsBtn" class="icon-btn" type="button" aria-label="Open settings" title="Settings">☼</button>
+        </div>
+    </header>
 
-    --radius: 8px;
-    --font-size: 16px;
-    --card-size: 160px;
-    --grid-gap: 16px;
-}
+    <main id="content">
+        <section class="hero" aria-labelledby="heroTitle">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-line"></span> THE ARCADE, REIMAGINED</p>
+                <h1 id="heroTitle">Find your next<br><span>favorite game.</span></h1>
+                <p class="hero-description">A little break goes a long way. Pick up where you left off or discover something new.</p>
+                <a class="hero-cta" href="#gamesSection">Explore games <span aria-hidden="true">↘</span></a>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+                <div class="art-orbit orbit-one"></div>
+                <div class="art-orbit orbit-two"></div>
+                <div class="art-spark spark-one">✳</div>
+                <div class="art-spark spark-two">✦</div>
+                <div class="art-disc"><span>AZ</span></div>
+                <div class="art-caption">PRESS PLAY<br><b>REPEAT</b></div>
+            </div>
+            <div class="hero-index"><span>01</span> / YOUR PLAY SPACE</div>
+        </section>
 
-/* LIGHT THEME */
-[data-theme="light"] {
-    --bg: #f2f2f2;
-    --panel: #ffffff;
-    --border: #dcdcdc;
-    --text: #111;
-    --text-soft: #444;
-    --hover: #e6e6e6;
-}
+        <section id="recentSection" class="library-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">BACK IN THE GAME</p>
+                    <h2>Pick up where you left off</h2>
+                </div>
+                <span class="section-note">YOUR RECENT PLAYS</span>
+            </div>
+            <div id="recentGrid" class="grid"></div>
+        </section>
 
-/* ------------------------------------------------------------
-   GLOBAL
------------------------------------------------------------- */
-body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    font-family: "Inter", sans-serif;
-    color: var(--text);
-    overflow-x: hidden;
-    font-size: var(--font-size);
-}
+        <section id="gamesSection" class="library-section games-section">
+            <div class="section-heading games-heading">
+                <div>
+                    <p class="eyebrow">THE FULL COLLECTION</p>
+                    <h2>Choose your next adventure</h2>
+                </div>
+                <label class="search-wrap">
+                    <span aria-hidden="true">⌕</span>
+                    <input id="searchInput" type="search" placeholder="Search games…" autocomplete="off" aria-label="Search games">
+                </label>
+            </div>
+            <div id="gamesGrid" class="grid"></div>
+        </section>
 
-h1, h2, h3, h4 {
-    margin: 0 0 10px 0;
-    font-weight: 600;
-}
+        <footer class="site-footer">
+            <span class="footer-brand">APEX ZERO</span>
+            <span>Built for the joy of play.</span>
+        </footer>
+    </main>
 
-/* ------------------------------------------------------------
-   LOADING SCREEN
------------------------------------------------------------- */
-#loadingScreen {
-    position: fixed;
-    inset: 0;
-    background: var(--bg);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 0.4s ease;
-}
+    <div id="settingsPanel" class="side-panel" aria-label="Settings" aria-hidden="true">
+        <div class="side-header">
+            <div>
+                <p class="eyebrow">MAKE IT YOURS</p>
+                <h2>Settings</h2>
+            </div>
+            <button id="closeSettings" class="close-btn" type="button" aria-label="Close settings">✕</button>
+        </div>
 
-.loader {
-    width: 42px;
-    height: 42px;
-    border: 4px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
+        <div class="settings-tabs" role="tablist">
+            <button class="tab-btn active" data-tab="appearanceTab" type="button">Look</button>
+            <button class="tab-btn" data-tab="uiTab" type="button">Display</button>
+            <button class="tab-btn" data-tab="layoutTab" type="button">Layout</button>
+            <button class="tab-btn" data-tab="systemTab" type="button">System</button>
+            <button class="tab-btn" data-tab="analyticsTab" type="button">Access</button>
+        </div>
 
-@keyframes spin { to { transform: rotate(360deg); } }
+        <div class="tab-content" id="appearanceTab">
+            <h3>Theme</h3>
+            <select id="themeSelect">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+            </select>
 
-/* ------------------------------------------------------------
-   TOPBAR
------------------------------------------------------------- */
-#topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 20px;
-    background: var(--panel);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
+            <h3>Accent color</h3>
+            <input type="color" id="accentPicker" value="#b8f36b">
+            <div id="accentPresets"></div>
 
-.icon-btn {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 6px 10px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: 0.15s;
-    color: var(--text);
-}
+            <h3>Background style</h3>
+            <select id="backgroundSelect">
+                <option value="solid">Solid</option>
+                <option value="noise">Noise</option>
+                <option value="gradient">Gradient</option>
+                <option value="blur">Blurred panels</option>
+            </select>
 
-.icon-btn:hover {
-    background: var(--hover);
-}
+            <h3>Corner radius</h3>
+            <select id="radiusSelect">
+                <option value="0">Sharp</option>
+                <option value="8">Medium</option>
+                <option value="16">Rounded</option>
+            </select>
 
-/* ------------------------------------------------------------
-   MAIN CONTENT
------------------------------------------------------------- */
-#content {
-    padding: 20px;
-}
+            <h3>Contrast</h3>
+            <select id="contrastSelect">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+        </div>
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--card-size), 1fr));
-    gap: var(--grid-gap);
-}
+        <div class="tab-content" id="uiTab" style="display:none;">
+            <h3>Font size</h3>
+            <input type="range" id="fontSizeSlider" min="12" max="22" value="16">
 
-/* ------------------------------------------------------------
-   SEARCH BAR
------------------------------------------------------------- */
-#searchInput {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--panel);
-    color: var(--text);
-    font-size: var(--font-size);
-}
+            <h3>Card size</h3>
+            <input type="range" id="cardSizeSlider" min="120" max="240" value="160">
 
-/* ------------------------------------------------------------
-   GAME CARDS
------------------------------------------------------------- */
-.game-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 10px;
-    cursor: pointer;
-    transition: 0.15s;
-}
+            <h3>Grid density</h3>
+            <select id="densitySelect">
+                <option value="compact">Compact</option>
+                <option value="comfort">Comfort</option>
+                <option value="spacious">Spacious</option>
+            </select>
+        </div>
 
-.game-card:hover {
-    background: var(--hover);
-    transform: translateY(-2px);
-}
+        <div class="tab-content" id="layoutTab" style="display:none;">
+            <h3>Layout mode</h3>
+            <select id="layoutModeSelect">
+                <option value="grid">Comfort grid</option>
+                <option value="compact">Compact grid</option>
+                <option value="list">List view</option>
+            </select>
 
-.game-thumb {
-    width: 100%;
-    height: calc(var(--card-size) * 0.75);
-    object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-}
+            <h3>Sorting</h3>
+            <select id="sortSelect">
+                <option value="az">A → Z</option>
+                <option value="recent">Recently added</option>
+                <option value="played">Most played</option>
+            </select>
 
-.game-title {
-    margin-top: 8px;
-    font-size: calc(var(--font-size) * 0.9);
-}
+            <h3>Recent section</h3>
+            <label class="check-label">
+                <input type="checkbox" id="toggleRecent" checked>
+                Show recent plays
+            </label>
+        </div>
 
-/* ------------------------------------------------------------
-   SIDE PANEL SETTINGS
------------------------------------------------------------- */
-.side-panel {
-    position: fixed;
-    top: 0;
-    right: -380px;
-    width: 360px;
-    height: 100%;
-    background: var(--panel);
-    border-left: 1px solid var(--border);
-    box-shadow: -4px 0 12px rgba(0,0,0,0.4);
-    padding: 20px;
-    transition: right 0.3s ease;
-    z-index: 200;
-    overflow-y: auto;
-}
+        <div class="tab-content" id="systemTab" style="display:none;">
+            <h3>Autoscan</h3>
+            <label class="check-label">
+                <input type="checkbox" id="autoscanToggle">
+                Enable autoscan
+            </label>
 
-.side-panel.active {
-    right: 0;
-}
+            <h3>Maintenance</h3>
+            <button id="clearRecentBtn" class="admin-action" type="button">Clear recent plays</button>
+            <button id="clearCacheBtn" class="admin-action" type="button">Clear cache</button>
 
-.side-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+            <h3>Performance</h3>
+            <button id="fpsToggleBtn" class="admin-action" type="button">Toggle FPS monitor</button>
+        </div>
 
-.close-btn {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 6px 10px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    color: var(--text);
-}
+        <div class="tab-content" id="analyticsTab" style="display:none;">
+            <div class="analytics-gate">
+                <h3>Owner analytics</h3>
+                <p>Use the owner access code to unlock the private dashboard.</p>
+                <input id="analyticsPasscode" type="password" placeholder="Enter access code" autocomplete="off">
+                <button id="analyticsUnlockBtn" class="admin-action primary" type="button">Unlock dashboard</button>
+                <p id="analyticsStatus" class="status-text">Protected analytics is active.</p>
+            </div>
+            <button id="openAnalyticsPanelBtn" class="admin-action" type="button">Open private panel</button>
+        </div>
+    </div>
 
-/* ------------------------------------------------------------
-   SETTINGS TABS
------------------------------------------------------------- */
-.settings-tabs {
-    display: flex;
-    gap: 6px;
-    margin: 16px 0;
-}
+    <div id="analyticsPanel" class="side-panel analytics-panel" aria-label="Private analytics" aria-hidden="true">
+        <div class="side-header">
+            <div>
+                <p class="eyebrow">PRIVATE</p>
+                <h2>Analytics</h2>
+            </div>
+            <button id="closeAnalyticsPanel" class="close-btn" type="button" aria-label="Close analytics panel">✕</button>
+        </div>
 
-.tab-btn {
-    flex: 1;
-    padding: 8px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--panel);
-    cursor: pointer;
-    color: var(--text);
-}
+        <div id="analyticsLockedState" class="analytics-lock">
+            <h3>Access required</h3>
+            <p>The private analytics board is hidden behind an owner access code.</p>
+        </div>
 
-.tab-btn.active {
-    background: var(--accent);
-    color: #fff;
-}
+        <div id="analyticsUnlockedState" class="analytics-dashboard" style="display:none;">
+            <div class="stats-grid">
+                <div class="metric-card">
+                    <span class="metric-label">Visits</span>
+                    <strong id="analyticsVisits">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Unique</span>
+                    <strong id="analyticsUnique">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Today</span>
+                    <strong id="analyticsToday">0</strong>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Sessions</span>
+                    <strong id="analyticsSessions">0</strong>
+                </div>
+            </div>
 
-/* ------------------------------------------------------------
-   TAB CONTENT
------------------------------------------------------------- */
-.tab-content {
-    margin-top: 10px;
-}
+            <div class="analytics-section">
+                <h3>Top games</h3>
+                <ul id="analyticsTopGames" class="analytics-list"></ul>
+            </div>
 
-.tab-content h3 {
-    margin-top: 16px;
-    margin-bottom: 6px;
-}
+            <div class="analytics-section">
+                <h3>Recent activity</h3>
+                <ul id="analyticsRecent" class="analytics-list subtle"></ul>
+            </div>
+        </div>
+    </div>
 
-.tab-content select,
-.tab-content input[type="range"],
-.tab-content input[type="color"] {
-    width: 100%;
-    padding: 8px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--panel);
-    color: var(--text);
-}
+    <div id="launchPrompt" class="overlay" role="dialog" aria-modal="true" aria-labelledby="launchTitle">
+        <div class="launch-box">
+            <p class="eyebrow">READY WHEN YOU ARE</p>
+            <h2 id="launchTitle">Launch game?</h2>
+            <img id="launchThumb" class="launch-thumb" alt="">
+            <p id="launchName"></p>
+            <div class="launch-buttons">
+                <button id="cancelLaunch" class="cancel-btn" type="button">Not now</button>
+                <button id="confirmLaunch" class="launch-btn" type="button">Let's play <span>↗</span></button>
+            </div>
+        </div>
+    </div>
 
-/* ------------------------------------------------------------
-   ADMIN ACTION BUTTONS
------------------------------------------------------------- */
-.admin-action {
-    width: 100%;
-    padding: 10px;
-    margin-top: 12px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    background: var(--panel);
-    cursor: pointer;
-    color: var(--text);
-}
+    <div id="fpsCounter"></div>
 
-.admin-action:hover {
-    background: var(--hover);
-}
-
-/* ------------------------------------------------------------
-   LAUNCH PROMPT
------------------------------------------------------------- */
-.overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.45);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 300;
-}
-
-.overlay.active {
-    display: flex;
-}
-
-.launch-box {
-    background: var(--panel);
-    padding: 20px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    width: 320px;
-    text-align: center;
-}
-
-.launch-thumb {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    margin: 10px 0;
-}
-
-.launch-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 16px;
-}
-
-.cancel-btn,
-.launch-btn {
-    flex: 1;
-    padding: 10px;
-    margin: 0 4px;
-    border-radius: var(--radius);
-    border: 1px solid var(--border);
-    cursor: pointer;
-}
-
-.launch-btn {
-    background: var(--accent);
-    color: #fff;
-}
-
-/* ------------------------------------------------------------
-   FPS COUNTER
------------------------------------------------------------- */
-#fpsCounter {
-    position: fixed;
-    bottom: 12px;
-    right: 12px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 6px 10px;
-    border-radius: var(--radius);
-    display: none;
-    color: var(--text);
-}
+    <script type="module" src="js/main.js"></script>
+    <script>
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loadingScreen");
+            loader.style.opacity = "0";
+            setTimeout(() => loader.style.display = "none", 400);
+        });
+    </script>
+</body>
+</html>

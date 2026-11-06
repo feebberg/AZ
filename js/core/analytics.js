@@ -1,0 +1,46 @@
+import { APEX_THEME } from "./core/theme.js";
+import { APEX_AUTOSCAN } from "./core/autoscan.js";
+import { APEX_RECENT } from "./core/recent.js";
+import { APEX_RENDER } from "./core/render.js";
+import { APEX_SEARCH } from "./core/search.js";
+import { APEX_LAUNCH } from "./core/launch.js";
+import { APEX_SETTINGS } from "./core/settings.js";
+import { APEX_FPS } from "./core/fps.js";
+import { APEX_UPDATE } from "./core/update.js";
+import { APEX_MANUAL_GAMES } from "./games.js";
+import { APEX_ANALYTICS } from "./core/analytics.js";
+
+window.APEX_LAUNCH = APEX_LAUNCH;
+window.APEX_RENDER = APEX_RENDER;
+window.APEX_FPS = APEX_FPS;
+window.APEX_ANALYTICS = APEX_ANALYTICS;
+
+window.APEX = {
+    manualGames: APEX_MANUAL_GAMES,
+    allGames: [],
+    autoscanEnabled: true
+};
+
+async function init() {
+    await APEX_UPDATE.check();
+    APEX_THEME.loadCustomization();
+
+    APEX_ANALYTICS.recordVisit();
+    APEX_ANALYTICS.renderDashboard();
+
+    APEX.allGames = await APEX_AUTOSCAN.loadAllGames();
+    APEX_RENDER.renderGames(APEX.allGames);
+    APEX_RENDER.renderRecent();
+
+    APEX_SEARCH.setupSearch();
+    APEX_SETTINGS.setupSettingsPanel();
+    APEX_SETTINGS.setupCustomizationControls();
+    APEX_ANALYTICS.setupAnalyticsPanel();
+
+    document.getElementById("cancelLaunch").onclick = () => APEX_LAUNCH.closeLaunchPrompt();
+    document.getElementById("confirmLaunch").onclick = () => APEX_LAUNCH.confirmLaunch();
+
+    APEX_UPDATE.start();
+}
+
+document.addEventListener("DOMContentLoaded", init);
